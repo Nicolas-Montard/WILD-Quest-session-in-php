@@ -1,4 +1,30 @@
-<?php require 'inc/data/products.php'; ?>
+<?php require 'inc/data/products.php';
+
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] === 'GET') {
+    $command = array_map('trim', $_GET);
+    $command = array_map('htmlentities', $command);
+    
+    $commandAdd = match ($command['add_to_cart']) {
+        '46' => 'Pecan nuts',
+        '36' => 'Chocolate chips',
+        '58' => 'full chocolate cookie',
+        '32' => 'M&M\'s cookies',
+        default => 'invalid'
+    };
+
+    if (!array_key_exists('cart', $_SESSION)) {
+        $_SESSION['cart'] = [
+            'Pecan nuts' => 0,
+            'Chocolate chips' => 0,
+            'full chocolate cookie' => 0,
+            'M&M\'s cookies' => 0
+        ];
+    }
+    $_SESSION['cart'][$commandAdd]++;
+}
+?>
 <?php require 'inc/head.php'; ?>
 <section class="cookies container-fluid">
     <div class="row">
