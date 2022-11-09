@@ -2,7 +2,7 @@
 
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] === 'GET') {
+if (!empty($_GET)) {
     $command = array_map('trim', $_GET);
     $command = array_map('htmlentities', $command);
     
